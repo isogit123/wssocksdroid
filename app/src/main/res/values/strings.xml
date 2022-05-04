@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">SocksDroid</string>
+    <string name="app_name">WSSocksDroid</string>
 
     <string name="profile">Profile</string>
     <string name="prof_default">Default</string>
 
     <string name="connection">Connection</string>
+    <string name="wssocks_server">WSSOCKS Server Address</string>
+    <string name="wssocks_key">WSSOCKS Key</string>
     <string name="server_ip">Server IP</string>
     <string name="server_port">Server Port</string>
     <string name="ipv6_proxy">IPv6</string>

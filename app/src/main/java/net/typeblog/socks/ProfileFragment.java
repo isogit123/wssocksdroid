@@ -71,7 +71,7 @@ public class ProfileFragment extends PreferenceFragment implements Preference.On
 
     private ListPreference mPrefProfile, mPrefRoutes;
     private EditTextPreference mPrefServer, mPrefPort, mPrefUsername, mPrefPassword,
-            mPrefDns, mPrefDnsPort, mPrefAppList, mPrefUDPGW;
+            mPrefDns, mPrefDnsPort, mPrefAppList, mPrefUDPGW, mPrefWSSOCKSSERVER, mPrefWSSOCKSKey;
     private CheckBoxPreference mPrefUserpw, mPrefPerApp, mPrefAppBypass, mPrefIPv6, mPrefUDP, mPrefAuto;
 
     @Override
@@ -183,7 +183,16 @@ public class ProfileFragment extends PreferenceFragment implements Preference.On
         } else if (p == mPrefAuto) {
             mProfile.setAutoConnect(Boolean.parseBoolean(newValue.toString()));
             return true;
-        } else {
+        } else if(p == mPrefWSSOCKSSERVER){
+            mProfile.setWSSOCKSSERVER(newValue.toString());
+            resetTextN(mPrefWSSOCKSSERVER, newValue);
+            return true;
+        } else if(p == mPrefWSSOCKSKey){
+            mProfile.setWSSOCKSKey(newValue.toString());
+            resetTextN(mPrefWSSOCKSKey, newValue);
+            return true;
+        }
+        else {
             return false;
         }
     }
@@ -224,6 +233,8 @@ public class ProfileFragment extends PreferenceFragment implements Preference.On
         mPrefUDP = (CheckBoxPreference) findPreference(PREF_UDP_PROXY);
         mPrefUDPGW = (EditTextPreference) findPreference(PREF_UDP_GW);
         mPrefAuto = (CheckBoxPreference) findPreference(PREF_ADV_AUTO_CONNECT);
+        mPrefWSSOCKSSERVER = (EditTextPreference) findPreference(PREF_WSSOCKS_SERVER);
+        mPrefWSSOCKSKey = (EditTextPreference) findPreference(PREF_WSSOCKS_KEY);
 
         mPrefProfile.setOnPreferenceChangeListener(this);
         mPrefServer.setOnPreferenceChangeListener(this);
@@ -241,6 +252,8 @@ public class ProfileFragment extends PreferenceFragment implements Preference.On
         mPrefUDP.setOnPreferenceChangeListener(this);
         mPrefUDPGW.setOnPreferenceChangeListener(this);
         mPrefAuto.setOnPreferenceChangeListener(this);
+        mPrefWSSOCKSKey.setOnPreferenceChangeListener(this);
+        mPrefWSSOCKSSERVER.setOnPreferenceChangeListener(this);
     }
 
     private void reload() {
@@ -268,7 +281,9 @@ public class ProfileFragment extends PreferenceFragment implements Preference.On
         mPrefDns.setText(mProfile.getDns());
         mPrefDnsPort.setText(String.valueOf(mProfile.getDnsPort()));
         mPrefUDPGW.setText(mProfile.getUDPGW());
-        resetText(mPrefServer, mPrefPort, mPrefUsername, mPrefPassword, mPrefDns, mPrefDnsPort, mPrefUDPGW);
+        mPrefWSSOCKSSERVER.setText(mProfile.getWSSOCKSSERVER());
+        mPrefWSSOCKSKey.setText(mProfile.getWSSOCKSKey());
+        resetText(mPrefServer, mPrefPort, mPrefUsername, mPrefPassword, mPrefDns, mPrefDnsPort, mPrefUDPGW, mPrefWSSOCKSSERVER, mPrefWSSOCKSKey);
 
         mPrefAppList.setText(mProfile.getAppList());
     }

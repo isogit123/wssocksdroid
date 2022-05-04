@@ -130,6 +130,18 @@ public class Profile {
     public void setUDPGW(String gw) {
         mPref.edit().putString(key("udpgw"), gw).apply();
     }
+    public String getWSSOCKSSERVER() {
+        return mPref.getString(key("wssocks_server"), "wss://");
+    }
+    public void setWSSOCKSSERVER(String serv) {
+        mPref.edit().putString(key("wssocks_server"), serv).apply();
+    }
+    public String getWSSOCKSKey() {
+        return mPref.getString(key("wssocks_key"), "");
+    }
+    public void setWSSOCKSKey(String key) {
+        mPref.edit().putString(key("wssocks_key"), key).apply();
+    }
 
     public boolean autoConnect() {
         return mPref.getBoolean(key("auto"), false);

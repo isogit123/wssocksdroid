@@ -9,6 +9,19 @@
         android:title="@string/connection">
 
         <EditTextPreference
+            android:defaultValue="Default value"
+            android:key="wssocks_server"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/wssocks_server" />
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:inputType="textPassword"
+            android:key="wssocks_key"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/wssocks_key" />
+        <EditTextPreference
             android:key="server_ip"
             android:title="@string/server_ip"
             android:singleLine="true"/>

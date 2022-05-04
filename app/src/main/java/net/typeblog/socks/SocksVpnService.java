@@ -15,6 +15,7 @@ import android.util.Log;
 import net.typeblog.socks.util.Routes;
 import net.typeblog.socks.util.Utility;
 
+import java.io.IOException;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -39,7 +40,7 @@ public class SocksVpnService extends VpnService {
     private ParcelFileDescriptor mInterface;
     private boolean mRunning = false;
     private final IBinder mBinder = new VpnBinder();
-
+    Process wssocksProc = null;
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
@@ -68,6 +69,17 @@ public class SocksVpnService extends VpnService {
         final String[] appList = intent.getStringArrayExtra(INTENT_APP_LIST);
         final boolean ipv6 = intent.getBooleanExtra(INTENT_IPV6_PROXY, false);
         final String udpgw = intent.getStringExtra(INTENT_UDP_GW);
+        final String wssocks_server = intent.getStringExtra(INTENT_WSSOCKS_SERVER);
+        final String wssocks_key = intent.getStringExtra(INTENT_WSSOCKS_KEY);
+        //Start WSSOCKS client
+        String wssocksCmd = String.format("/libwssocks.so client --addr :1080 --remote %s", wssocks_server);
+        if(wssocks_key.isEmpty())
+            wssocksCmd += " --key " + wssocks_key;
+        try {
+            wssocksProc = Runtime.getRuntime().exec(getApplicationInfo().nativeLibraryDir + wssocksCmd);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // Notifications on Oreo and above need a channel
         Notification.Builder builder;
@@ -141,7 +153,7 @@ public class SocksVpnService extends VpnService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        wssocksProc.destroy();
         stopSelf();
     }
 
