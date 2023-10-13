@@ -20,6 +20,6 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: dist-without-markdown
+        name: apk
         path: app/build/outputs/apk/
 
